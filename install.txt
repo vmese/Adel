@@ -1,0 +1,64 @@
+install cmake :
+
+sudo apt-get install cmake
+
+configure ssh access :
+
+https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md
+
+install ctc : 
+
+Voir 
+http://tvaira.free.fr/projets/cdc-2016/activites/activite-raspberry-pi-cross-compilation.html
+
+Solution :
+Télécharger et extraire la toolchain
+
+$ wget https://s3.amazonaws.com/RTI/Community/ports/toolchains/raspbian-toolchain-gcc-4.7.2-linux64.tar.gz
+
+$ tar xvzf raspbian-toolchain-gcc-4.7.2-linux64.tar.gz
+
+Une fois fait (Chez moi dans "~/pi/raspbian-toolchain-gcc-4.7.2-linux64"), créer un fichier "Toolchain-Pi.cmake" qui contient :
+
+
+# this one is important
+SET(CMAKE_SYSTEM_NAME Linux)
+#this one not so much
+SET(CMAKE_SYSTEM_VERSION 1)
+
+# specify the cross compiler
+SET(CMAKE_C_COMPILER
+/home/vincent/pi/raspbian-toolchain-gcc-4.7.2-linux64/bin/arm-raspbian-linux-gnueabi-gcc)
+
+SET(CMAKE_CXX_COMPILER
+/home/vincent/pi/raspbian-toolchain-gcc-4.7.2-linux64/bin/arm-raspbian-linux-gnueabi-g++)
+
+# where is the target environment
+SET(CMAKE_FIND_ROOT_PATH
+/home/vincent/pi/raspbian-toolchain-gcc-4.7.2-linux64)
+
+# search for programs in the build host directories
+SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+# for libraries and headers in the target directories
+SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+
+
+
+Créer un CMakeList.txt à la racine du projet avec la forme suivante :
+project(helloworld)
+cmake_minimum_required(VERSION 2.8)
+aux_source_directory(. SRC_LIST)
+add_executable(${PROJECT_NAME} ${SRC_LIST})
+
+Créer un répertoire de cross-comp et une fois dedans faire :
+- cmake -DCMAKE_TOOLCHAIN_FILE=/home/vincent/pi/Toolchain-RaspberryPi.cmake ../helloworld/
+- make
+
+
+
+
+
+Accès GPIO : 
+http://www.hertaville.com/introduction-to-accessing-the-raspberry-pis-gpio-in-c.html
+
