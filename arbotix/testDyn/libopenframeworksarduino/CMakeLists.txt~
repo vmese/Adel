@@ -1,0 +1,15 @@
+set(AUDIOTOOLBOX_SRCS
+  alsoundfile.cpp
+  )
+
+set(AUDIOTOOLBOX_H
+  alsoundfile.h
+)
+
+add_library(audiotoolbox SHARED ${AUDIOTOOLBOX_SRCS} ${AUDIOTOOLBOX_H})
+
+target_link_libraries(audiotoolbox sndfile boost_system  boost_filesystem)
+#target_include_directories(audiotoolbox PUBLIC ${AUDIOTOOLBOX_H})
+SET_TARGET_PROPERTIES(audiotoolbox PROPERTIES OUTPUT_NAME audiotoolbox)
+
+

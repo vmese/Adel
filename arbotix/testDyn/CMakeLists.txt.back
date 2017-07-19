@@ -1,0 +1,19 @@
+project(soundFilePlayer_multibands)
+
+cmake_minimum_required(VERSION 2.8)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/../..")
+
+add_subdirectory(libaudiotoolbox)
+
+include(openFrameworks)
+include_directories(libaudiotoolbox)
+
+SET(SRCS
+   src/main.cpp
+    src/soundFilePlayer.cpp
+    src/soundFilePlayer.h	
+)
+    
+add_executable(soundFilePlayer_multibands ${SRCS})
+target_link_libraries(soundFilePlayer_multibands ${OPENFRAMEWORKS_LIBRARIES} audiotoolbox)
