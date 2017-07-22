@@ -1,0 +1,22 @@
+<port>
+	<name>/dev/ttyACM0</name>
+	<rate>57600</rate>
+</port>
+
+<servo>
+        <name>servo1</name>
+        <id>1</id>
+ 	<pinNb>9</pinNb>
+        <min>0</min>
+        <max>180</max>
+	<initialPos>90</initialPos>
+</servo>
+
+<servo>
+        <name>servo2</name>
+        <id>2</id>
+	<pinNb>10</pinNb>
+        <min>0</min>
+        <max>180</max>
+        <initialPos>180</initialPos>
+</servo>
